@@ -1,0 +1,7 @@
+.lein-*
+.clj-kondo/
+target/
+.vscode/
+.calva/
+.nrepl-port
+.lsp/
