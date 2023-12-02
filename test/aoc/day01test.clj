@@ -39,3 +39,39 @@
                          treb7uchet")
       89))))
 
+(deftest find-number-in-first-row-of-second-case
+  (testing "Can find numbers in first row"
+    (is
+     (=
+      (findNumberIn "two1nine")
+      29))))
+(deftest find-number-in-second-row-of-second-case
+  (testing "Can find numbers in second row"
+    (is
+     (=
+      (findNumberIn "eightwothree")
+      83))))
+(deftest find-numbers-in-multiple-row-in-second-case
+  (testing "Can extract a list of numbers from a multiline string in second case"
+    (is
+     (=
+      (findNumberListIn "two1nine
+eightwothree
+abcone2threexyz
+xtwone3four
+4nineeightseven2
+zoneight234
+7pqrstsixteen")
+      '(29 83 13 24 42 14 76)))))
+(deftest sum-numbers-in-multiple-row-in-second-case
+  (testing "Can extract a list of numbers from a multiline string in second case"
+    (is
+     (=
+      (sumNumberListIn "two1nine
+eightwothree
+abcone2threexyz
+xtwone3four
+4nineeightseven2
+zoneight234
+7pqrstsixteen")
+      281))))
