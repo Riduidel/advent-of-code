@@ -7,8 +7,7 @@
 (read-available-pieces 
  "12 red cubes, 13 green cubes, and 14 blue cubes") 
   (let
-   [
-    available (read-available-pieces "12 red cubes, 13 green cubes, and 14 blue cubes")
+   [available (read-available-pieces "12 red cubes, 13 green cubes, and 14 blue cubes")
     game1 (read-game "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green")
     game4 (read-game "Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red")
     game1possible (is-game-possible available game1)
@@ -98,11 +97,51 @@
         possible-games-ids (map (fn [g] (get g :game-index)) possible-games)]
     (reduce + possible-games-ids)))
 
+(defn compute-minimum-set
+  [game]
+  (let [turns (get game :turns)]
+    (reduce (fn 
+              [minimum turn]
+              {"red" (max (get minimum "red" 0)(get turn "red" 0))
+               "green" (max (get minimum "green" 0) (get turn "green" 0))
+               "blue" (max (get minimum "blue" 0) (get turn "blue" 0))})
+            {
+             "red" 0
+             "green" 0
+             "blue" 0
+            }
+            turns)))
 
-;(comment
+(defn compute-power 
+  [map-of-minimums]
+  (reduce * (vals map-of-minimums)))
+(defn powers-of-minimum-for-all-sets
+  "Get the powers of all sets"
+  [games-descriptions]
+  (let [games (read-games-list games-descriptions)
+        minimum-sets (map compute-minimum-set games)
+        powers (map compute-power minimum-sets)]
+    (reduce + powers)))
+
+(comment
+(read-available-pieces 
+ "12 red cubes, 13 green cubes, and 14 blue cubes") 
+  (let
+   [available (read-available-pieces "12 red cubes, 13 green cubes, and 14 blue cubes")
+    game1 (read-game "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green")
+    game4 (read-game "Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red")
+    game1minimum (compute-minimum-set game1)
+    game4minimum (compute-minimum-set game4)
+    game1power (compute-power game1minimum)
+    game4power (compute-power game4minimum)
+    ]
+    game1power
+    ))
+
+
+(comment
 (def text (slurp (.getFile (io/resource "day02.txt"))))
 
-(sum-ids-of-possible-games
- text
- "12 red cubes, 13 green cubes, and 14 blue cubes")
-;  )
+(powers-of-minimum-for-all-sets
+ text)
+  )
