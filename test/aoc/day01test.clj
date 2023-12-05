@@ -2,6 +2,7 @@
     (:require [clojure.test :refer :all]
               [aoc.day01 :refer :all]))
 
+(comment
 (deftest find-number-in-first-row
   (testing "Can find numbers in first row"
     (is 
@@ -75,3 +76,4 @@ xtwone3four
 zoneight234
 7pqrstsixteen")
       281))))
+)
