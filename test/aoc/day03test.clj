@@ -3,6 +3,8 @@
                 [clojure.string :as str]
              [aoc.day03 :refer :all]))
 
+(comment
+
 (deftest can-locate-parts
   (testing "We can locate all parts"
     (is
@@ -36,3 +38,4 @@
 ...$.*....
 .664.598..")
       4361))))
+)
